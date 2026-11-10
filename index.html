@@ -6,72 +6,55 @@
 <title>Saleroom Verdict</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,400;0,600;1,400&family=Inter:wght@400;500;600&display=swap">
 <style>
-/* Layout: a catalogue page — scale drawing at left, lot details at right, verdict meter beneath. */
 :root{
-  --bg:#E9EBEE; --surface:#FFFFFF; --ink:#141A20; --muted:#697585; --rule:#D3D8DE;
+  --bg:#FFFFFF; --ink:#141A20; --muted:#697585; --rule:#DDE1E6;
   --bonhams:#27424B; --phillips:#B2572F; --good:#2F6B4F; --bad:#9A3B32;
   --serif:'Spectral',Georgia,'Times New Roman',serif;
   --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#12161A; --surface:#1A2026; --ink:#E7EAED; --muted:#8C98A6; --rule:#2B333B;
-  --bonhams:#6FA3B2; --phillips:#E08A55; --good:#6DBF93; --bad:#E07A70; color-scheme:dark;}}
-:root[data-theme="dark"]{
-  --bg:#12161A; --surface:#1A2026; --ink:#E7EAED; --muted:#8C98A6; --rule:#2B333B;
-  --bonhams:#6FA3B2; --phillips:#E08A55; --good:#6DBF93; --bad:#E07A70; color-scheme:dark;}
-
 *{box-sizing:border-box}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);margin:0}
-.wrap{max-width:980px;margin:0 auto;
+.wrap{max-width:820px;margin:0 auto;
   padding-left:max(16px,env(safe-area-inset-left,0px));
   padding-right:max(16px,env(safe-area-inset-right,0px));
-  padding-block:28px 40px}
+  padding-block:32px 40px}
 
 header{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;
-  border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:22px}
-h1{font-family:var(--serif);font-weight:600;font-size:clamp(21px,3.4vw,28px);margin:0;letter-spacing:-.01em}
-.sub{color:var(--muted);font-size:12.5px;line-height:1.5;max-width:46ch}
+  border-bottom:1px solid var(--rule);padding-bottom:14px;margin-bottom:28px}
+h1{font-family:var(--serif);font-weight:600;font-size:clamp(22px,3.6vw,30px);margin:0;letter-spacing:-.01em}
 
-/* ---------- stage ---------- */
-.stage{background:var(--surface);border:1px solid var(--rule);border-radius:3px;
-  display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:0}
-@media(max-width:620px){.stage{grid-template-columns:1fr}}
+.verdict{border:1px solid var(--rule);border-radius:3px;padding:30px 28px 32px}
+.artist{font-family:var(--serif);font-size:clamp(22px,3.4vw,30px);font-weight:600;line-height:1.2;text-wrap:balance}
+.artist a{color:inherit;text-decoration:none}
+.artist a:hover{text-decoration:underline;text-underline-offset:4px}
+.artist a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.title{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:17px;margin:6px 0 22px;
+  line-height:1.35;text-wrap:balance}
 
-.scalebox{border-right:1px solid var(--rule);padding:22px 18px;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:14px;min-height:300px}
-@media(max-width:620px){.scalebox{border-right:0;border-bottom:1px solid var(--rule);min-height:230px}}
-.canvasframe{position:relative;display:flex;align-items:center;justify-content:center;height:210px;width:100%}
-#shape{border:1.5px solid var(--ink);background:
-  repeating-linear-gradient(45deg,transparent,transparent 6px,color-mix(in srgb,var(--ink) 7%,transparent) 6px,color-mix(in srgb,var(--ink) 7%,transparent) 7px);
+.top{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:30px;
+  padding-bottom:28px;margin-bottom:28px;border-bottom:1px solid var(--rule)}
+@media(max-width:620px){.top{grid-template-columns:1fr;gap:22px}}
+.scalebox{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.canvasframe{display:flex;align-items:center;justify-content:center;height:210px;width:100%}
+#shape{border:1.5px solid var(--ink);
+  background:repeating-linear-gradient(45deg,transparent,transparent 6px,
+    color-mix(in srgb,var(--ink) 7%,transparent) 6px,color-mix(in srgb,var(--ink) 7%,transparent) 7px);
   transition:width .55s cubic-bezier(.22,.8,.3,1),height .55s cubic-bezier(.22,.8,.3,1)}
 .dims{font-size:11px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;
   font-variant-numeric:tabular-nums;text-align:center}
 .ref{display:flex;align-items:center;gap:7px;font-size:10px;color:var(--muted);letter-spacing:.05em}
 .refbar{height:1px;background:var(--muted);display:block}
-
-.detail{padding:22px 24px;display:flex;flex-direction:column;gap:0;min-width:0}
-.lotno{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);
-  font-variant-numeric:tabular-nums}
-.artist{font-family:var(--serif);font-size:clamp(19px,2.8vw,24px);font-weight:600;margin:7px 0 2px;
-  line-height:1.2;text-wrap:balance}
-.title{font-family:var(--serif);font-style:italic;color:var(--muted);font-size:15.5px;margin:0 0 16px;
-  line-height:1.35;text-wrap:balance}
-dl{display:grid;grid-template-columns:auto 1fr;gap:6px 18px;margin:0;font-size:13px}
-dt{color:var(--muted);font-size:11px;letter-spacing:.07em;text-transform:uppercase;align-self:center}
+.detail{min-width:0;display:flex;flex-direction:column;justify-content:center}
+dl{display:grid;grid-template-columns:auto minmax(0,1fr);gap:9px 22px;margin:0;font-size:14.5px}
+dt{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase;align-self:center}
 dd{margin:0;font-variant-numeric:tabular-nums}
-.lotlink{margin-top:16px;font-size:12px;color:var(--muted)}
-.lotlink a{color:inherit;text-underline-offset:3px}
-.lotlink a:hover{color:var(--ink)}
-
-/* ---------- verdict ---------- */
-.verdict{background:var(--surface);border:1px solid var(--rule);border-top:0;padding:20px 24px 24px}
-.meterhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:9px}
+.meterhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
 .mlabel{font-size:11px;letter-spacing:.11em;text-transform:uppercase}
 .mlabel.b{color:var(--bonhams)} .mlabel.p{color:var(--phillips)}
-.readout{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.readout{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.02em}
 
-.track{position:relative;height:30px;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
+.track{position:relative;height:34px;border:1px solid var(--rule);border-radius:2px;overflow:hidden;
   background:linear-gradient(90deg,
     color-mix(in srgb,var(--bonhams) 17%,transparent),
     color-mix(in srgb,var(--bonhams) 4%,transparent) 42%,
@@ -81,83 +64,67 @@ dd{margin:0;font-variant-numeric:tabular-nums}
 .needle{position:absolute;top:-1px;bottom:-1px;width:3px;background:var(--ink);left:50%;
   transform:translateX(-50%);transition:left .9s cubic-bezier(.3,.9,.3,1),background .3s}
 .needle.b{background:var(--bonhams)} .needle.p{background:var(--phillips)}
-.ticks{display:flex;justify-content:space-between;font-size:10px;color:var(--muted);
-  margin-top:5px;font-variant-numeric:tabular-nums}
 
-.outcome{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:16px;min-height:30px}
-.badge{font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;padding:5px 11px;border-radius:2px;
+.outcome{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:22px;min-height:32px}
+.badge{font-size:12px;letter-spacing:.09em;text-transform:uppercase;padding:6px 12px;border-radius:2px;
   border:1px solid currentColor;opacity:0;transform:translateY(5px);transition:opacity .35s,transform .35s}
 .badge.show{opacity:1;transform:none}
 .badge.ok{color:var(--good)} .badge.no{color:var(--bad)}
-.truth{font-size:13px;color:var(--muted);opacity:0;transition:opacity .35s}
+.truth{font-size:14px;color:var(--muted);opacity:0;transition:opacity .35s}
 .truth.show{opacity:1}
 .truth b{color:var(--ink);font-weight:600}
 
-/* ---------- controls + tally ---------- */
-.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin-top:18px}
+.bar{margin-top:18px}
 .btns{display:flex;gap:7px;flex-wrap:wrap}
 button{font-family:inherit;font-size:12.5px;padding:7px 14px;border:1px solid var(--rule);
-  background:var(--surface);color:var(--ink);border-radius:2px;cursor:pointer;transition:border-color .2s}
+  background:var(--bg);color:var(--ink);border-radius:2px;cursor:pointer;transition:border-color .2s}
 button:hover{border-color:var(--muted)}
 button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
-button[disabled]{opacity:.4;cursor:default}
 .tally{display:flex;align-items:center;gap:12px;font-size:12px;color:var(--muted);
   font-variant-numeric:tabular-nums}
-.pips{display:flex;gap:3px}
+.pips{display:flex;gap:3px;flex-wrap:wrap}
 .pip{width:9px;height:9px;border:1px solid var(--rule);border-radius:50%;transition:all .3s}
 .pip.ok{background:var(--good);border-color:var(--good)}
 .pip.no{background:var(--bad);border-color:var(--bad)}
 .pip.now{box-shadow:0 0 0 2px color-mix(in srgb,var(--ink) 25%,transparent)}
-
-footer{margin-top:26px;padding-top:16px;border-top:1px solid var(--rule);
-  font-size:11.5px;color:var(--muted);line-height:1.65}
-footer b{color:var(--ink);font-weight:600}
 @media(prefers-reduced-motion:reduce){*{transition-duration:.01ms!important}}
 </style>
-
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div>
-      <h1>Saleroom Verdict</h1>
-      <p class="sub">Eighteen lots sold in 2026. The classifier was trained on 2023&ndash;2025 and has
-        seen none of them. Each verdict comes from the Newton&ndash;Raphson logistic fit.</p>
-    </div>
+    <h1>Saleroom Verdict</h1>
     <div class="tally">
       <span id="score">&mdash;</span>
       <span class="pips" id="pips"></span>
     </div>
   </header>
 
-  <div class="stage">
-    <div class="scalebox">
-      <div class="canvasframe"><div id="shape" style="width:60px;height:60px"></div></div>
-      <div class="dims" id="dims">&nbsp;</div>
-      <div class="ref"><span class="refbar" id="refbar"></span><span>1 metre</span></div>
-    </div>
-    <div class="detail">
-      <div class="lotno" id="lotno">Lot 1 of 18</div>
-      <div class="artist" id="artist">&nbsp;</div>
-      <div class="title" id="title">&nbsp;</div>
-      <dl>
-        <dt>Medium</dt><dd id="medium">&nbsp;</dd>
-        <dt>Created</dt><dd id="period">&nbsp;</dd>
-        <dt>Estimate</dt><dd id="est">&nbsp;</dd>
-        <dt>Realised</dt><dd id="price">&nbsp;</dd>
-      </dl>
-      <div class="lotlink" id="lotlink"></div>
-    </div>
-  </div>
-
   <div class="verdict">
+    <div class="top">
+      <div class="scalebox">
+        <div class="canvasframe"><div id="shape" style="width:60px;height:60px"></div></div>
+        <div class="dims" id="dims">&nbsp;</div>
+        <div class="ref"><span class="refbar" id="refbar"></span><span>1 metre</span></div>
+      </div>
+      <div class="detail">
+        <div class="artist" id="artist">&nbsp;</div>
+        <div class="title" id="title">&nbsp;</div>
+        <dl>
+          <dt>Medium</dt><dd id="medium">&nbsp;</dd>
+          <dt>Created</dt><dd id="period">&nbsp;</dd>
+          <dt>Estimate</dt><dd id="est">&nbsp;</dd>
+          <dt>Realised</dt><dd id="price">&nbsp;</dd>
+        </dl>
+      </div>
+    </div>
+
     <div class="meterhead">
       <span class="mlabel b">&#9664; Bonhams</span>
       <span class="readout" id="readout">awaiting lot</span>
       <span class="mlabel p">Phillips &#9654;</span>
     </div>
     <div class="track"><div class="mid"></div><div class="needle" id="needle"></div></div>
-    <div class="ticks"><span>0%</span><span>50%</span><span>100%</span></div>
     <div class="outcome">
       <span class="badge" id="badge">&nbsp;</span>
       <span class="truth" id="truth"></span>
@@ -171,29 +138,27 @@ footer b{color:var(--ink);font-weight:600}
       <button id="next">Next</button>
       <button id="restart">Restart</button>
     </div>
-    <div class="tally"><span id="running">&nbsp;</span></div>
   </div>
-
-  <footer id="foot"></footer>
 </div>
 
 <script>
-const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02bbahu","medium":"oil","support":"canvas","period":"1970_99","h":101.6,"w":127.0,"price":109431.48617325212,"est_lo":30000.0,"est_hi":50000.0,"fame":0.0,"exposure":"local","url":"https://www.bonhams.com/auction/31730/lot/18/","p":0.3821728552687613,"actual":"Bonhams"},{"artist":"Tracey Emin","title":"Love is What You Want","medium":"other","support":"other","period":"unknown","h":69.85000000000001,"w":49.85,"price":1924.223432994385,"est_lo":1350.736355760901,"est_hi":2026.104533641352,"fame":3.68887945411394,"exposure":"established","url":"https://www.bonhams.com/auction/32235/lot/99/","p":0.00024039356871295443,"actual":"Bonhams"},{"artist":"Yayoi Kusama","title":"SPLENDOUR OF STARS CHANGING INTO BLUE","medium":"acrylic","support":"canvas","period":"2000plus","h":100.0,"w":100.0,"price":430097.5593014018,"est_lo":396542.7289485583,"est_hi":528723.6385980777,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/yayoi-kusama/236103","p":0.967569036413572,"actual":"Phillips"},{"artist":"J. L. Jensen","title":"Dahlias in a Basket (Kurv med georginer)","medium":"oil","support":"canvas","period":"1800s","h":43.2,"w":57.2,"price":8460.023895649674,"est_lo":3000.0,"est_hi":5000.0,"fame":0.0,"exposure":"circulating","url":"https://www.phillips.com/detail/j-l-jensen/224337","p":0.002280555896925619,"actual":"Phillips"},{"artist":"Karel Appel","title":"Pink Reclining Nude","medium":"mixed","support":"paper","period":"1945_69","h":49.5,"w":63.8,"price":21281.39786097893,"est_lo":18000.0,"est_hi":25000.0,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/karel-appel/230261","p":0.2401470358600185,"actual":"Phillips"},{"artist":"Lisa Brice","title":"Untitled","medium":"drawing","support":"paper","period":"unknown","h":75.88,"w":60.01,"price":2607.8278476835408,"est_lo":1996.6895466067847,"est_hi":3327.815911011309,"fame":2.07944154167984,"exposure":"circulating","url":"https://www.bonhams.com/auction/32233/lot/17/","p":0.0017017015240792111,"actual":"Bonhams"},{"artist":"Paul Rebeyrolle","title":"La Chambre le Soir II","medium":"oil","support":"canvas","period":"1945_69","h":96.7,"w":130.0,"price":11030.4,"est_lo":6894.0,"est_hi":9192.0,"fame":2.07944154167984,"exposure":"circulating","url":"https://www.bonhams.com/auction/31788/lot/79/","p":0.12398693942690141,"actual":"Bonhams"},{"artist":"James Rosenquist","title":"Untitled","medium":"oil","support":"canvas","period":"1970_99","h":183.0,"w":152.0,"price":175533.28654909,"est_lo":106684.50739967472,"est_hi":160026.76109951205,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/james-rosenquist/231833","p":0.7231438819794535,"actual":"Phillips"},{"artist":"Bernard Aubertin","title":"Perles de lumi\u00e8re","medium":"oil","support":"canvas","period":"1970_99","h":100.0,"w":100.0,"price":2630.53145518828,"est_lo":8921.376059262586,"est_hi":15293.787530164433,"fame":1.94591014905531,"exposure":"circulating","url":"https://www.phillips.com/detail/bernard-aubertin/239213","p":0.514842924370878,"actual":"Phillips"},{"artist":"Michael Krebber","title":"Untitled","medium":"other","support":"canvas","period":"1970_99","h":130.3,"w":159.60000000000002,"price":26515.38484293249,"est_lo":20315.42767808904,"est_hi":27087.23690411872,"fame":0.0,"exposure":"local","url":"https://www.phillips.com/detail/michael-krebber/231088","p":0.27365200185815086,"actual":"Phillips"},{"artist":"Gajin Fujita","title":"Dream, 2002","medium":"acrylic","support":"panel","period":"2000plus","h":121.9,"w":40.6,"price":15672.909303994697,"est_lo":15000.0,"est_hi":26000.0,"fame":1.09861228866811,"exposure":"1-lot","url":"https://www.bonhams.com/auction/31839/lot/53/","p":0.8992986903356265,"actual":"Bonhams"},{"artist":"Ryan Mosley","title":"Hands Turn","medium":"oil","support":"canvas","period":"2000plus","h":120.0,"w":90.0,"price":2137.08789337451,"est_lo":2548.7035102856366,"est_hi":3823.055265428455,"fame":1.09861228866811,"exposure":"circulating","url":"https://www.phillips.com/detail/ryan-mosley/238422","p":0.5403813560843244,"actual":"Phillips"},{"artist":"Zhao Shao'ang","title":"Bird and Bamboo, 1988","medium":"ink","support":"paper","period":"1970_99","h":30.5,"w":34.300000000000004,"price":2195.469528555002,"est_lo":2000.0,"est_hi":3000.0,"fame":0.0,"exposure":"established","url":"https://www.bonhams.com/auction/32579/lot/660/","p":0.060434967349608036,"actual":"Bonhams"},{"artist":"Walasse Ting","title":"Abstraction","medium":"acrylic","support":"canvas","period":"1945_69","h":92.0,"w":129.0,"price":24661.232392390106,"est_lo":19117.23441270554,"est_hi":31862.05735450924,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/walasse-ting/239066","p":0.4324952431262043,"actual":"Phillips"},{"artist":"Philippe Decrauzat","title":"The hour has come","medium":"acrylic","support":"canvas","period":"2000plus","h":90.5,"w":60.0,"price":8088.96,"est_lo":4596.0,"est_hi":6894.0,"fame":0.6931471805599451,"exposure":"local","url":"https://www.bonhams.com/auction/31788/lot/16/","p":0.7761638896078926,"actual":"Bonhams"},{"artist":"Pierre-Auguste Renoir","title":"Portrait de Gabrielle","medium":"oil","support":"canvas","period":"1900_44","h":14.2,"w":10.0,"price":59199.24087573817,"est_lo":50000.0,"est_hi":70000.0,"fame":4.75359019110636,"exposure":"established","url":"https://www.bonhams.com/auction/32380/lot/20/","p":0.051034730999620116,"actual":"Bonhams"},{"artist":"Robert Nava","title":"Drawing","medium":"drawing","support":"paper","period":"2000plus","h":44.5,"w":35.6,"price":7095.0,"est_lo":5000.0,"est_hi":7000.0,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/robert-nava/239820","p":0.8002916164456391,"actual":"Phillips"},{"artist":"Travis Fish","title":"Gucci","medium":"acrylic","support":"other","period":"2000plus","h":25.200000000000003,"w":20.5,"price":522.7211864273752,"est_lo":1338.5863647539545,"est_hi":2007.8795471309315,"fame":0.0,"exposure":"1-lot","url":"https://www.phillips.com/detail/travis-fish/233212","p":0.7543427282003603,"actual":"Phillips"}],"overall_acc":0.8697091510995507,"n_test":8458,"auc":0.8901};
+const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02bbahu","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"1970_99","h":101.6,"w":127.0,"price":109431.48617325212,"price_usd":108450.0,"est_lo":30000.0,"est_hi":50000.0,"fame":0.0,"exposure":"local","url":"https://www.bonhams.com/auction/31730/lot/18/","p":0.3821728552687613,"actual":"Bonhams"},{"artist":"Tracey Emin","title":"Love is What You Want","medium_text":null,"medium":"other","support":"other","period":"unknown","h":69.85000000000001,"w":49.85,"price":1924.223432994385,"price_usd":1901.83678891135,"est_lo":1350.736355760901,"est_hi":2026.104533641352,"fame":3.68887945411394,"exposure":"established","url":"https://www.bonhams.com/auction/32235/lot/99/","p":0.00024039356871295443,"actual":"Bonhams"},{"artist":"Yayoi Kusama","title":"SPLENDOUR OF STARS CHANGING INTO BLUE","medium_text":"acrylic on canvas","medium":"acrylic","support":"canvas","period":"2000plus","h":100.0,"w":100.0,"price":430097.5593014018,"price_usd":426283.4336197,"est_lo":396542.7289485583,"est_hi":528723.6385980777,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/yayoi-kusama/236103","p":0.967569036413572,"actual":"Phillips"},{"artist":"J. L. Jensen","title":"Dahlias in a Basket (Kurv med georginer)","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"1800s","h":43.2,"w":57.2,"price":8460.023895649674,"price_usd":8385.0,"est_lo":3000.0,"est_hi":5000.0,"fame":0.0,"exposure":"circulating","url":"https://www.phillips.com/detail/j-l-jensen/224337","p":0.002280555896925619,"actual":"Phillips"},{"artist":"Karel Appel","title":"Pink Reclining Nude","medium_text":"gouache and collage on paper","medium":"mixed","support":"paper","period":"1945_69","h":49.5,"w":63.8,"price":21281.39786097893,"price_usd":20640.0,"est_lo":18000.0,"est_hi":25000.0,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/karel-appel/230261","p":0.2401470358600185,"actual":"Phillips"},{"artist":"Lisa Brice","title":"Untitled","medium_text":"Screenprint in blue, 2023, on Somerset Velvet Warm White paper, signed with the initials, ","medium":"drawing","support":"paper","period":"unknown","h":75.88,"w":60.01,"price":2607.8278476835408,"price_usd":2555.76261965669,"est_lo":1996.6895466067847,"est_hi":3327.815911011309,"fame":2.07944154167984,"exposure":"circulating","url":"https://www.bonhams.com/auction/32233/lot/17/","p":0.0017017015240792111,"actual":"Bonhams"},{"artist":"Paul Rebeyrolle","title":"La Chambre le Soir II","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"1945_69","h":96.7,"w":130.0,"price":11030.4,"price_usd":11030.4,"est_lo":6894.0,"est_hi":9192.0,"fame":2.07944154167984,"exposure":"circulating","url":"https://www.bonhams.com/auction/31788/lot/79/","p":0.12398693942690141,"actual":"Bonhams"},{"artist":"James Rosenquist","title":"Untitled","medium_text":"oil on canvas on panel","medium":"oil","support":"canvas","period":"1970_99","h":183.0,"w":152.0,"price":175533.28654909,"price_usd":172028.768181975,"est_lo":106684.50739967472,"est_hi":160026.76109951205,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/james-rosenquist/231833","p":0.7231438819794535,"actual":"Phillips"},{"artist":"Bernard Aubertin","title":"Perles de lumi\u00e8re","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"1970_99","h":100.0,"w":100.0,"price":2630.53145518828,"price_usd":2630.53145518828,"est_lo":8921.376059262586,"est_hi":15293.787530164433,"fame":1.94591014905531,"exposure":"circulating","url":"https://www.phillips.com/detail/bernard-aubertin/239213","p":0.514842924370878,"actual":"Phillips"},{"artist":"Michael Krebber","title":"Untitled","medium_text":"lacquer on linen","medium":"other","support":"canvas","period":"1970_99","h":130.3,"w":159.60000000000002,"price":26515.38484293249,"price_usd":26206.9017047349,"est_lo":20315.42767808904,"est_hi":27087.23690411872,"fame":0.0,"exposure":"local","url":"https://www.phillips.com/detail/michael-krebber/231088","p":0.27365200185815086,"actual":"Phillips"},{"artist":"Gajin Fujita","title":"Dream, 2002","medium_text":"acrylic, spray paint and gold leaf on panel, in six parts","medium":"acrylic","support":"panel","period":"2000plus","h":121.9,"w":40.6,"price":15672.909303994697,"price_usd":15360.0,"est_lo":15000.0,"est_hi":26000.0,"fame":1.09861228866811,"exposure":"1-lot","url":"https://www.bonhams.com/auction/31839/lot/53/","p":0.8992986903356265,"actual":"Bonhams"},{"artist":"Ryan Mosley","title":"Hands Turn","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"2000plus","h":120.0,"w":90.0,"price":2137.08789337451,"price_usd":2137.08789337451,"est_lo":2548.7035102856366,"est_hi":3823.055265428455,"fame":1.09861228866811,"exposure":"circulating","url":"https://www.phillips.com/detail/ryan-mosley/238422","p":0.5403813560843244,"actual":"Phillips"},{"artist":"Zhao Shao'ang","title":"Bird and Bamboo, 1988","medium_text":"Ink and color on paper, framed and glazed, inscribed by the artist, dated wuchen, signed S","medium":"ink","support":"paper","period":"1970_99","h":30.5,"w":34.300000000000004,"price":2195.469528555002,"price_usd":2176.0,"est_lo":2000.0,"est_hi":3000.0,"fame":0.0,"exposure":"established","url":"https://www.bonhams.com/auction/32579/lot/660/","p":0.060434967349608036,"actual":"Bonhams"},{"artist":"Walasse Ting","title":"Abstraction","medium_text":"acrylic on canvas","medium":"acrylic","support":"canvas","period":"1945_69","h":92.0,"w":129.0,"price":24661.232392390106,"price_usd":24661.232392390106,"est_lo":19117.23441270554,"est_hi":31862.05735450924,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/walasse-ting/239066","p":0.4324952431262043,"actual":"Phillips"},{"artist":"Philippe Decrauzat","title":"The hour has come","medium_text":"acrylic on canvas","medium":"acrylic","support":"canvas","period":"2000plus","h":90.5,"w":60.0,"price":8088.96,"price_usd":8088.96,"est_lo":4596.0,"est_hi":6894.0,"fame":0.6931471805599451,"exposure":"local","url":"https://www.bonhams.com/auction/31788/lot/16/","p":0.7761638896078926,"actual":"Bonhams"},{"artist":"Pierre-Auguste Renoir","title":"Portrait de Gabrielle","medium_text":"oil on canvas","medium":"oil","support":"canvas","period":"1900_44","h":14.2,"w":10.0,"price":59199.24087573817,"price_usd":58880.0,"est_lo":50000.0,"est_hi":70000.0,"fame":4.75359019110636,"exposure":"established","url":"https://www.bonhams.com/auction/32380/lot/20/","p":0.051034730999620116,"actual":"Bonhams"},{"artist":"Robert Nava","title":"Drawing","medium_text":"crayon, graphite and marker on paper","medium":"drawing","support":"paper","period":"2000plus","h":44.5,"w":35.6,"price":7095.0,"price_usd":7095.0,"est_lo":5000.0,"est_hi":7000.0,"fame":0.0,"exposure":"established","url":"https://www.phillips.com/detail/robert-nava/239820","p":0.8002916164456391,"actual":"Phillips"},{"artist":"Travis Fish","title":"Gucci","medium_text":"acrylic and sharpie on velvet","medium":"acrylic","support":"other","period":"2000plus","h":25.200000000000003,"w":20.5,"price":522.7211864273752,"price_usd":518.03292315978,"est_lo":1338.5863647539545,"est_hi":2007.8795471309315,"fame":0.0,"exposure":"1-lot","url":"https://www.phillips.com/detail/travis-fish/233212","p":0.7543427282003603,"actual":"Phillips"}],"overall_acc":0.8697091510995507,"n_test":8458,"auc":0.8901};
 </script>
 <script>
 (function(){
   const L = DATA.lots, N = L.length;
   const $ = id => document.getElementById(id);
+
   const MAXDIM = Math.max(...L.map(l => Math.max(l.h, l.w)));
   const PX_PER_CM = 190 / MAXDIM;           // one scale for every lot, so sizes compare
   const PERIOD = {unknown:'not recorded', pre1800:'before 1800', '1800s':'19th century',
-    '1900_44':'1900–44', '1945_69':'1945–69', '1970_99':'1970–99', '2000plus':'2000 or later'};
+    '1900_44':'1900\u201344', '1945_69':'1945\u201369', '1970_99':'1970\u201399', '2000plus':'2000 or later'};
   const money = v => '$' + Math.round(v).toLocaleString('en-US');
 
   let i = -1, playing = true, timers = [], marks = new Array(N).fill(null);
 
-  $('pips').innerHTML = L.map((_,k)=>`<span class="pip" data-k="${k}"></span>`).join('');
   $('refbar').style.width = (100 * PX_PER_CM) + 'px';
+  $('pips').innerHTML = L.map((_,k)=>`<span class="pip" data-k="${k}"></span>`).join('');
 
   const clear = () => { timers.forEach(clearTimeout); timers = []; };
   const after = (ms, fn) => timers.push(setTimeout(fn, ms));
@@ -201,7 +166,7 @@ const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02
   function paintScore(){
     const done = marks.filter(m => m !== null);
     const ok = done.filter(Boolean).length;
-    $('score').textContent = done.length ? `${ok} / ${done.length} correct` : '—';
+    $('score').textContent = done.length ? `${ok} / ${done.length} correct` : '\u2014';
     document.querySelectorAll('.pip').forEach((p,k)=>{
       p.className = 'pip' + (marks[k]===true?' ok':marks[k]===false?' no':'') + (k===i?' now':'');
     });
@@ -212,25 +177,26 @@ const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02
     i = (k + N) % N;
     const l = L[i];
 
-    $('lotno').textContent = `Lot ${i+1} of ${N}`;
-    $('artist').textContent = l.artist;
+    const artist = $('artist');
+    artist.textContent = '';
+    const link = document.createElement('a');
+    link.href = l.url; link.target = '_blank'; link.rel = 'noopener';
+    link.textContent = l.artist;
+    artist.appendChild(link);
     $('title').textContent = l.title;
-    $('medium').textContent = `${l.medium} on ${l.support}`;
+    const med = l.medium_text ? l.medium_text.charAt(0).toLowerCase() + l.medium_text.slice(1) : 'not recorded';
+    $('medium').textContent = med;
     $('period').textContent = PERIOD[l.period] || l.period;
-    $('est').textContent = (l.est_lo && l.est_hi)
-      ? `${money(l.est_lo)} – ${money(l.est_hi)}` : 'not published';
-    $('price').textContent = money(l.price);
-    $('dims').textContent = `${l.h.toFixed(1)} × ${l.w.toFixed(1)} cm`;
+    $('est').textContent = (l.est_lo && l.est_hi) ? `${money(l.est_lo)} \u2013 ${money(l.est_hi)}` : 'not published';
+    $('price').textContent = money(l.price_usd);
+    $('dims').textContent = `${l.h.toFixed(1)} \u00d7 ${l.w.toFixed(1)} cm`;
     $('shape').style.width  = Math.max(6, l.w * PX_PER_CM) + 'px';
     $('shape').style.height = Math.max(6, l.h * PX_PER_CM) + 'px';
-    const host = l.url.includes('phillips') ? 'phillips.com' : 'bonhams.com';
-    $('lotlink').innerHTML =
-      `<a href="${l.url}" target="_blank" rel="noopener">See the work on ${host} ↗</a>`;
 
     const n = $('needle');
     n.className = 'needle'; n.style.left = '50%';
-    $('readout').textContent = 'weighing the characteristics…';
-    $('badge').className = 'badge'; $('badge').textContent = ' ';
+    $('readout').textContent = 'weighing the characteristics\u2026';
+    $('badge').className = 'badge'; $('badge').textContent = '\u00a0';
     $('truth').className = 'truth'; $('truth').textContent = '';
     paintScore();
 
@@ -248,12 +214,8 @@ const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02
       $('badge').textContent = right ? 'Correct' : 'Wrong';
       $('badge').className = 'badge show ' + (right ? 'ok' : 'no');
       $('truth').className = 'truth show';
-      $('truth').innerHTML = `Model said <b>${said}</b> · sold by <b>${l.actual}</b>`;
+      $('truth').innerHTML = `Model said <b>${said}</b> \u00b7 sold by <b>${l.actual}</b>`;
       paintScore();
-      const done = marks.filter(m => m !== null).length;
-      $('running').textContent = done === N
-        ? `full test set: ${(DATA.overall_acc*100).toFixed(1)}% of ${DATA.n_test.toLocaleString()} lots`
-        : '';
     });
 
     if (playing) after(3900, () => show(i + 1));
@@ -275,18 +237,8 @@ const DATA = {"lots":[{"artist":"Lloyd Sexton Jr.","title":"Old Pali Road, O\u02
     if (e.key === ' ') { e.preventDefault(); $('play').click(); }
   });
 
-  $('foot').innerHTML =
-    `Rectangles are drawn to one shared scale from each lot&rsquo;s catalogued dimensions, so sizes ` +
-    `compare across lots. Probabilities come from the logistic model fitted by Newton&rsquo;s method ` +
-    `(&lambda; = 1, 12 iterations), trained on <b>21,783</b> lots from 2023&ndash;2025 and evaluated on ` +
-    `<b>${DATA.n_test.toLocaleString()}</b> lots from 2026, where it reaches ` +
-    `<b>${(DATA.overall_acc*100).toFixed(1)}%</b> accuracy and <b>${DATA.auc}</b> AUC against a ` +
-    `78.5% always-Bonhams baseline. These eighteen span the probability range; they are not a random ` +
-    `sample, so the tally above is illustrative and the figures here are the real ones.`;
-
   show(0);
 })();
 </script>
-
 </body>
 </html>

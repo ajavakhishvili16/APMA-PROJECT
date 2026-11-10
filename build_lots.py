@@ -168,12 +168,14 @@ def main():
         lots.append({
             "artist": str(row.artist_name) if pd.notna(row.artist_name) else "Unattributed",
             "title": str(row.artwork_title)[:70],
+            "medium_text": None if pd.isna(row.medium) else str(row.medium)[:90],
             "medium": str(row.medium_c),
             "support": str(row.support_c),
             "period": str(row.created_period),
             "h": float(row.height_cm),
             "w": float(row.width_cm),
-            "price": float(row.price_usd_2026),
+            "price": float(row.price_usd_2026),   # inflation-adjusted, what the model sees
+            "price_usd": float(row.price_usd),    # converted at the sale-date rate, matches the listing
             "est_lo": None if pd.isna(row.estimate_low_usd) else float(row.estimate_low_usd),
             "est_hi": None if pd.isna(row.estimate_high_usd) else float(row.estimate_high_usd),
             "fame": float(row.fame),
