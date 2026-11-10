@@ -1,0 +1,50 @@
+                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                 ln_ppa   R-squared:                       0.377
+Model:                            OLS   Adj. R-squared:                  0.376
+Method:                 Least Squares   F-statistic:                     194.2
+Date:                Tue, 10 Nov 2026   Prob (F-statistic):               0.00
+Time:                        09:38:26   Log-Likelihood:                -38666.
+No. Observations:               21783   AIC:                         7.738e+04
+Df Residuals:                   21758   BIC:                         7.758e+04
+Df Model:                          24                                         
+Covariance Type:              cluster                                         
+=======================================================================================================================
+                                                          coef    std err          z      P>|z|      [0.025      0.975]
+-----------------------------------------------------------------------------------------------------------------------
+Intercept                                              11.8785      0.468     25.404      0.000      10.962      12.795
+C(exposure, Treatment('1-lot'))[T.circulating]          0.6714      0.064     10.424      0.000       0.545       0.798
+C(exposure, Treatment('1-lot'))[T.established]          0.8369      0.118      7.065      0.000       0.605       1.069
+C(exposure, Treatment('1-lot'))[T.local]                0.4333      0.046      9.339      0.000       0.342       0.524
+C(medium_c, Treatment('oil'))[T.acrylic]               -0.0273      0.078     -0.352      0.725      -0.179       0.125
+C(medium_c, Treatment('oil'))[T.drawing]               -0.7267      0.080     -9.133      0.000      -0.883      -0.571
+C(medium_c, Treatment('oil'))[T.ink]                   -0.2024      0.105     -1.932      0.053      -0.408       0.003
+C(medium_c, Treatment('oil'))[T.mixed]                 -0.4023      0.152     -2.646      0.008      -0.700      -0.104
+C(medium_c, Treatment('oil'))[T.other]                 -1.0299      0.081    -12.740      0.000      -1.188      -0.871
+C(medium_c, Treatment('oil'))[T.watercolour]            0.1657      0.093      1.775      0.076      -0.017       0.349
+C(support_c, Treatment('canvas'))[T.other]             -0.6254      0.080     -7.852      0.000      -0.781      -0.469
+C(support_c, Treatment('canvas'))[T.panel]             -0.1113      0.053     -2.099      0.036      -0.215      -0.007
+C(support_c, Treatment('canvas'))[T.paper]             -0.6133      0.075     -8.149      0.000      -0.761      -0.466
+C(season, Treatment('Q1'))[T.Q2]                        0.3806      0.046      8.344      0.000       0.291       0.470
+C(season, Treatment('Q1'))[T.Q3]                       -0.0426      0.042     -1.003      0.316      -0.126       0.041
+C(season, Treatment('Q1'))[T.Q4]                        0.3998      0.050      8.071      0.000       0.303       0.497
+C(created_period, Treatment('1945_69'))[T.1800s]       -0.4579      0.076     -6.018      0.000      -0.607      -0.309
+C(created_period, Treatment('1945_69'))[T.1900_44]      0.0044      0.069      0.064      0.949      -0.130       0.139
+C(created_period, Treatment('1945_69'))[T.1970_99]     -0.2608      0.067     -3.884      0.000      -0.392      -0.129
+C(created_period, Treatment('1945_69'))[T.2000plus]    -0.1480      0.075     -1.963      0.050      -0.296      -0.000
+C(created_period, Treatment('1945_69'))[T.pre1800]     -0.1384      0.121     -1.147      0.251      -0.375       0.098
+C(created_period, Treatment('1945_69'))[T.unknown]     -0.5695      0.063     -9.024      0.000      -0.693      -0.446
+fame                                                    0.1332      0.025      5.372      0.000       0.085       0.182
+ln_area                                                -2.0777      0.116    -17.847      0.000      -2.306      -1.849
+ln_area2                                                0.0847      0.007     11.642      0.000       0.070       0.099
+==============================================================================
+Omnibus:                      516.198   Durbin-Watson:                   0.843
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              645.530
+Skew:                           0.309   Prob(JB):                    6.68e-141
+Kurtosis:                       3.574   Cond. No.                     1.98e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors are robust to cluster correlation (CRV1)
+[2] The condition number is large, 1.98e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
