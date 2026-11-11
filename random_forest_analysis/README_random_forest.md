@@ -1,5 +1,7 @@
 # Random Forest vs. the Hedonic Model
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ajavakhishvili16/apma-project/blob/main/random_forest_analysis/rf_vs_ols_colab.ipynb)  ← click to run everything in your browser (Runtime → Run all)
+
 (`README_random_forest.md`: instructions for the random forest files in this repository.)
 
 These files are the random forest part of our APMA 4903 project. It asks one question:
@@ -16,7 +18,7 @@ Both models are fitted on **21,783 sales from Nov 2023 – Dec 2025** and tested
 
 1. Go to **https://colab.research.google.com** and sign in with a Google account.
 2. Choose **File → Open notebook → GitHub**, paste
-   `https://github.com/ajavakhishvili16/apma-project`, and open **`rf_vs_ols_colab.ipynb`**.
+   `https://github.com/ajavakhishvili16/apma-project`, and open **`random_forest_analysis/rf_vs_ols_colab.ipynb`**.
    (Or download the notebook from this repository and use **File → Upload notebook**.)
 3. Choose **Runtime → Run all**.
 
@@ -44,48 +46,50 @@ You need **Python 3.10 or newer** (check with `python3 --version`; on Windows us
 
 1. **Download the repository.** On the GitHub page click **Code → Download ZIP** and unzip it,
    or run `git clone https://github.com/ajavakhishvili16/apma-project.git`.
-2. **Open a terminal in the repository folder** (`apma-project`):
+2. **Open a terminal in the `random_forest_analysis` folder** inside the repository:
    ```bash
-   cd path/to/apma-project
+   cd path/to/apma-project/random_forest_analysis
    ```
 3. **Install the libraries** (one time only):
    ```bash
-   python3 -m pip install -r requirements_random_forest.txt
+   python3 -m pip install -r requirements.txt
    ```
-4. **Run the three scripts, in this order:**
+4. **Run the scripts, in this order:**
    ```bash
-   python3 hedonic_ols.py
-   python3 random_forest.py
-   python3 validation.py
-   python3 forest_from_scratch.py
+   python3 src/hedonic_ols.py
+   python3 src/random_forest.py
+   python3 src/validation.py
+   python3 src/forest_from_scratch.py
    ```
-   (On Windows, type `python` instead of `python3`.)
+   (On Windows, type `python` instead of `python3`.) The first three are also in `run_all.sh`.
 
-It takes about **3 minutes**. The tables print in the terminal, and every output is saved in a
-new folder called `rf_results/`.
+It takes about **3 minutes**. The tables print in the terminal, and every output is saved in
+`random_forest_analysis/results/`.
 
 ---
 
 ## Files you need
 
-All files sit together in the **repository root**. Keep them there and don't rename them.
+Keep this folder structure and don't rename anything. The scripts find the data one folder up,
+in the repository root.
 
-| File | What it does |
-|---|---|
-| `training_set_2023_2025_clean-2.csv` | Data: 21,783 training sales, Nov 2023 – Dec 2025 (already in the repository) |
-| `test_set_2026_clean-2.csv` | Data: 8,458 test sales, Jan – Oct 2026 (already in the repository) |
-| `rf_vs_ols_colab.ipynb` | The Colab notebook: runs all the code below and shows the results |
-| `common.py` | Shared settings: file locations, the model formula, accuracy measures |
-| `hedonic_ols.py` | Fits the hedonic OLS model. Reproduces the team's `coefficients-1.csv` exactly |
-| `random_forest.py` | Tunes and fits the random forest, then compares it with OLS on 2026 sales |
-| `forest_from_scratch.py` | Our own random forest, written line by line from the pseudocode, checked against scikit-learn |
-| `validation.py` | Draws the validation charts for the leaf size, m and B (run after `random_forest.py`) |
-| `requirements_random_forest.txt` | The Python libraries needed |
-| `forest_simulator.html` | Interactive demonstration: download it and open it in any web browser |
-| `README_random_forest.md` | This file |
-
-The scripts create a folder `rf_results/` for their outputs, so they never overwrite the team's
-other files.
+```
+apma-project/
+├── training_set_2023_2025_clean-2.csv   data: 21,783 training sales, Nov 2023 – Dec 2025
+├── test_set_2026_clean-2.csv            data: 8,458 test sales, Jan – Oct 2026
+└── random_forest_analysis/
+    ├── rf_vs_ols_colab.ipynb            the Colab notebook: runs everything and shows the results
+    ├── README_random_forest.md          this file
+    ├── requirements.txt                 the Python libraries needed
+    ├── run_all.sh                       runs the three main scripts
+    ├── src/
+    │   ├── common.py                    shared settings: file locations, model formula, accuracy measures
+    │   ├── hedonic_ols.py               fits the hedonic OLS model; reproduces the team's coefficients-1.csv
+    │   ├── random_forest.py             tunes and fits the forest, compares it with OLS on 2026 sales
+    │   ├── validation.py                validation charts for the leaf size, m and B (run after random_forest.py)
+    │   └── forest_from_scratch.py       our own forest, line by line from the pseudocode, checked against scikit-learn
+    └── results/                         outputs, written by the scripts
+```
 
 ---
 
@@ -142,7 +146,7 @@ Validation R² for each combination tried (B = 300 trees):
   250, 0.427 with 500), so more trees add only computing time.
 - scikit-learn turns `max_features=0.33` into int(0.33 × 28) = 9 inputs per split.
 
-`rf_results/validation_curves.png` shows these results as charts.
+`results/validation_curves.png` shows these results as charts.
 
 ---
 
@@ -163,7 +167,7 @@ Validation R² for each combination tried (B = 300 trees):
 - Most of the forest's advantage is at **Phillips** (R² 0.415 against 0.299 for OLS). At Bonhams
   the gap is smaller (0.429 against 0.392).
 
-Full numbers: `rf_results/rf_vs_ols_metrics.json` (created when you run the code).
+Full numbers: `results/rf_vs_ols_metrics.json` (created when you run the code).
 
 ---
 
@@ -194,7 +198,7 @@ So the main results, computed with scikit-learn, come from the same algorithm as
 
 ## The interactive simulator
 
-Download `forest_simulator.html` and open it in any web browser (no internet or
+Download `forest_simulator.html` (in `random_forest_analysis/`) and open it in any web browser (no internet or
 installation needed). It grows a forest tree by tree and shows the four parts of the algorithm:
 the bootstrap draw, the split search with every candidate's gain, one artwork's path down a tree,
 and R² rising as trees are added.
@@ -209,9 +213,10 @@ smaller, its numbers are close to, but not the same as, the results above.
 
 | Problem | Fix |
 |---|---|
-| `FileNotFoundError: ...training_set_2023_2025_clean-2.csv` | Run the code from the repository folder, with the CSVs and the `.py` files in the same folder |
-| `ModuleNotFoundError: No module named 'sklearn'` (or `statsmodels`, ...) | Run `python3 -m pip install -r requirements_random_forest.txt` |
-| `ModuleNotFoundError: No module named 'common'` | Run the scripts from the repository folder, where `common.py` is |
+| `FileNotFoundError: ...training_set_2023_2025_clean-2.csv` | Keep the two CSVs in the repository root and run the scripts from `random_forest_analysis/` (see the folder tree above) |
+| `ModuleNotFoundError: No module named 'sklearn'` (or `statsmodels`, ...) | Run `python3 -m pip install -r requirements.txt` |
+| `ModuleNotFoundError: No module named 'common'` | Run them as `python3 src/<script>.py` from `random_forest_analysis/` (the scripts and `common.py` are in `src/`) |
+| `can't open file '.../hedonic_ols.py'` in Colab | You have an old copy of the notebook. Open `random_forest_analysis/rf_vs_ols_colab.ipynb` from GitHub again, or run `!git -C apma-project pull` first |
 | `python3: command not found` (Windows) | Use `python` instead of `python3` |
 | Numbers differ slightly in the third decimal | Different library versions can change the random draws. Our run used scikit-learn 1.9 |
 
