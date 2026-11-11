@@ -19,7 +19,7 @@ from scipy import stats
 
 # data: pass a path, or the script uses dataset_inflation_adjusted.csv and downloads it if missing
 DATA_FILE = "dataset_inflation_adjusted.csv"
-DATA_URL = "https://raw.githubusercontent.com/ajavakhishvili16/APMA-PROJECT/d490da9ef11cbb1f576dbee205039233e2dda120/dataset_inflation_adjusted.csv"
+DATA_URL = "https://raw.githubusercontent.com/ajavakhishvili16/APMA-PROJECT/main/dataset_inflation_adjusted.csv"
 PATH = sys.argv[1] if len(sys.argv) > 1 else DATA_FILE
 if not os.path.exists(PATH):
     print(f"{PATH} not found, downloading from {DATA_URL}")
