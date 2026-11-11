@@ -10,9 +10,7 @@ clustered by artist.
 ## Model
 
 $$
-\ln\!\left(\frac{P_i}{A_i}\right) = \alpha + \gamma\cdot\text{Exposure}_i + \beta_F\,\text{Fame}_i
-+ \beta_1 \ln A_i + \beta_2 (\ln A_i)^2 + \mu\cdot\text{Medium}_i + \lambda\cdot\text{Support}_i
-+ \theta\cdot\text{CreationPeriod}_i + \delta\cdot\text{SaleSeason}_i + \varepsilon_i
+\ln\!\left(\frac{P_i}{A_i}\right) = \alpha + \gamma\cdot\text{Exposure}_i + \beta_F\,\text{Fame}_i + \beta_1 \ln A_i + \beta_2 (\ln A_i)^2 + \mu\cdot\text{Medium}_i + \lambda\cdot\text{Support}_i + \theta\cdot\text{CreationPeriod}_i + \delta\cdot\text{SaleSeason}_i + \varepsilon_i
 $$
 
 | Variable | Coding | Base |
@@ -29,7 +27,9 @@ $$
 - **Standard errors:** cluster-robust by artist (8,372 clusters),
   V̂ = (X′X)⁻¹ [Σ_g X_g′ ε̂_g ε̂_g′ X_g] (X′X)⁻¹.
 - **Joint tests:** Wald, W = (Rβ̂)′(RV̂R′)⁻¹(Rβ̂), one per variable block.
-- **% effects:** Kennedy (1981) correction for dummies, 100·(e^(β̂ − ½SE²) − 1).
+- **% effects:** Kennedy (1981) correction for dummies, 100·(e^(β̂ − ½SE²) − 1), which differs by less than 2 percentage points; due to the small difference, the presentation uses the uncorrected values due to time limitation.
+
+- 
 
 ## Data
 
