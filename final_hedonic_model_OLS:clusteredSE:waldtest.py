@@ -17,7 +17,7 @@ import pandas as pd
 import statsmodels.formula.api as smf
 from scipy import stats
 
-PATH = sys.argv[1] if len(sys.argv) > 1 else "Dataset_inflation_adjusted.csv"
+PATH = sys.argv[1] if len(sys.argv) > 1 else "dataset_inflation_adjusted.csv"
 PRICE = "price_usd_2026"          # inflation-adjusted price (September 2026 USD)
 SPLIT_DATE = "2026-01-01"
 
