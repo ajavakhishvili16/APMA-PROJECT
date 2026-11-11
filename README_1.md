@@ -9,9 +9,9 @@ clustered by artist.
 
 ## Model
 
-$$
-\ln\!\left(\frac{P_i}{A_i}\right) = \alpha + \gamma\cdot\text{Exposure}_i + \beta_F\,\text{Fame}_i + \beta_1 \ln A_i + \beta_2 (\ln A_i)^2 + \mu\cdot\text{Medium}_i + \lambda\cdot\text{Support}_i + \theta\cdot\text{CreationPeriod}_i + \delta\cdot\text{SaleSeason}_i + \varepsilon_i
-$$
+```math
+\ln\left(\frac{P_i}{A_i}\right) = \alpha + \gamma\cdot\text{Exposure}_i + \beta_F\,\text{Fame}_i + \beta_1 \ln A_i + \beta_2 (\ln A_i)^2 + \mu\cdot\text{Medium}_i + \lambda\cdot\text{Support}_i + \theta\cdot\text{CreationPeriod}_i + \delta\cdot\text{SaleSeason}_i + \varepsilon_i
+```
 
 | Variable | Coding | Base |
 |---|---|---|
